@@ -1,0 +1,22 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: test
+  namespace: kargo-demo
+spec:
+  subscriptions:
+    repos:
+      images:
+      - repoURL: ghcr.io/pratik3686/netflix
+        semverConstraint: ^0.0.1
+  promotionMechanisms:
+    gitRepoUpdates:
+    - repoURL: https://github.com/Gowtham029/kargo-demo.git
+      writeBranch: stage/test
+      kustomize:
+        images:
+        - image: ghcr.io/pratik3686/netflix
+          path: stages/test
+    argoCDAppUpdates:
+    - appName: kargo-demo-test
+      appNamespace: argocd
